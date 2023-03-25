@@ -1,0 +1,22 @@
+@media (max-width: 768px) {
+    .navbar-collapse {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: -100%;
+      z-index: 999;
+      width: 50%;
+      padding-top: 1.5rem;
+      background-color: #f8f9fa;
+      overflow-y: auto;
+      transition: all 0.5s;
+    }
+    .navbar-collapse.show {
+      left: 0;
+      box-shadow: 1px 0 7px rgba(0, 0, 0, 0.3);
+    }
+    .navbar-nav{
+        margin-left: 1rem;
+    }
+  }
+  

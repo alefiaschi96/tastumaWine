@@ -1,0 +1,18 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+      <img src="../../assets/images/tastuma_logo.png" class="logo">
+    </a>
+    <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" [class.show]="!isMenuCollapsed">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="/wine-list" (click)="isMenuCollapsed = !isMenuCollapsed">Lista</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/wine" (click)="isMenuCollapsed = !isMenuCollapsed">Aggiungi</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
