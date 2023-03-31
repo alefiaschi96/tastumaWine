@@ -9,6 +9,7 @@ import { ServiceService } from '../service.service';
 })
 export class WineNewComponent {
   wine: any;
+  error: string = "";
   constructor(private route: ActivatedRoute, private service: ServiceService) { }
 
   ngOnInit() {
@@ -33,19 +34,40 @@ export class WineNewComponent {
         fridge_type: "",
       }
     }
-    console.log(this.wine);
   }
 
   submit() {
     console.log(this.wine)
-    if (this.wine.id) {
-      this.service.editWine(this.wine).subscribe(data => {
-        console.log(data)
-      })
-    } else {
-      this.service.saveNewWine(this.wine).subscribe(data => {
-        console.log(data)
-      })
+    this.error = "";
+    if (this.isWineComplete(this.wine)) {
+      if (this.wine.id) {
+        this.service.editWine(this.replaceApostrophes(this.wine)).subscribe(data => {
+          console.log(data)
+        })
+      } else {
+        this.service.saveNewWine(this.replaceApostrophes(this.wine)).subscribe(data => {
+          console.log(data)
+        })
+      }
+    } else{
+      this.error = "Campi mancanti!"
     }
+  }
+
+  replaceApostrophes(json: any): any {
+    let jsonString = JSON.stringify(json);
+    console.log(jsonString)
+    jsonString = jsonString.replace(/'/g, "''");
+    console.log(jsonString)
+    return JSON.parse(jsonString);
+  }
+
+  isWineComplete(wine: any): boolean {
+    for (const key in wine) {
+      if (wine[key] === "") {
+        return false;
+      }
+    }
+    return true;
   }
 }

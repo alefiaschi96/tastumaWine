@@ -3,79 +3,83 @@
         <div class="row">
             <div class="form-group col">
                 <label for="wine_name">Nome Vino</label>
-                <input class="form-control" id="wine_name" [(ngModel)]="wine.wine_name" name="wine_name">
+                <input required class="form-control" id="wine_name" [(ngModel)]="wine.wine_name" name="wine_name">
             </div>
             <div class="form-group col">
                 <label for="price">Prezzo</label>
-                <input class="form-control" id="price" [(ngModel)]="wine.price" name="price" type="number">
+                <input required class="form-control" id="price" [(ngModel)]="wine.price" name="price" type="number">
             </div>
-            <div class="form-group col">
-                <label for="tastuma_vinery">Quantità</label>
-                <input class="form-control" id="tastuma_vinery" [(ngModel)]="wine.tastuma_vinery" name="tastuma_vinery" type="number">
+            <div class="form-group col-4">
+                <label for="menu_name">Nome menu</label>
+                <input required class="form-control" id="menu_name" [(ngModel)]="wine.menu_name" name="menu_name">
             </div>
         </div>
 
         <div class="row">
             <div class="form-group col-4">
                 <label for="type">Tipo</label>
-                <input class="form-control" id="type" [(ngModel)]="wine.type" name="type">
+                <input required class="form-control" id="type" [(ngModel)]="wine.type" name="type">
             </div>
             <div class="form-group col-4">
                 <label for="year">Anno</label>
-                <input class="form-control" id="year" [(ngModel)]="wine.year" name="year">
+                <input required class="form-control" id="year" [(ngModel)]="wine.year" name="year">
             </div>
             <div class="form-group col-4">
                 <label for="region">Regione</label>
-                <input class="form-control" id="region" [(ngModel)]="wine.region" name="region">
+                <input required class="form-control" id="region" [(ngModel)]="wine.region" name="region">
             </div>
         </div>
 
         <div class="row">
             <div class="form-group col-4">
                 <label for="company">Azienda</label>
-                <input class="form-control" id="company" [(ngModel)]="wine.company" name="company">
+                <input required class="form-control" id="company" [(ngModel)]="wine.company" name="company">
             </div>
             <div class="form-group col-4">
                 <label for="vine">Vitigno</label>
-                <input class="form-control" id="vine" [(ngModel)]="wine.vine" name="vine">
+                <input required class="form-control" id="vine" [(ngModel)]="wine.vine" name="vine">
             </div>
             <div class="form-group col-4">
                 <label for="reseller">Acquistato da</label>
-                <input class="form-control" id="reseller" [(ngModel)]="wine.reseller" name="reseller">
+                <input required class="form-control" id="reseller" [(ngModel)]="wine.reseller" name="reseller">
             </div>
         </div>
 
         <div class="row">
             <div class="form-group col-4">
                 <label for="service_temp">Temperatura di servizio</label>
-                <input class="form-control" id="service_temp" [(ngModel)]="wine.service_temp" name="service_temp">
+                <input required class="form-control" id="service_temp" [(ngModel)]="wine.service_temp" name="service_temp">
             </div>
             <div class="form-group col-4">
                 <label for="fridge_temp">Temperatura frigo</label>
-                <input class="form-control" id="fridge_temp" [(ngModel)]="wine.fridge_temp" name="fridge_temp">
+                <input required class="form-control" id="fridge_temp" [(ngModel)]="wine.fridge_temp" name="fridge_temp">
             </div>
             <div class="form-group col-4">
                 <label for="fridge_type">Tipo frigo</label>
-                <input class="form-control" id="fridge_type" [(ngModel)]="wine.fridge_type" name="fridge_type">
+                <input required class="form-control" id="fridge_type" [(ngModel)]="wine.fridge_type" name="fridge_type">
             </div>
         </div>
 
         <div class="row">
             <div class="form-group col-4">
                 <label for="denomination">Denominazione</label>
-                <input class="form-control" id="denomination" [(ngModel)]="wine.denomination" name="denomination">
+                <input required class="form-control" id="denomination" [(ngModel)]="wine.denomination" name="denomination">
+            </div>
+            <div class="form-group col">
+                <label for="tastuma_vinery">Quantità Tastuma</label>
+                <input required class="form-control" id="tastuma_vinery" [(ngModel)]="wine.tastuma_vinery" name="tastuma_vinery"
+                    type="number">
             </div>
             <div class="form-group col-4">
                 <label for="sciolze_vinery">Quantità Sciolze</label>
-                <input class="form-control" id="sciolze_vinery" [(ngModel)]="wine.sciolze_vinery" name="sciolze_vinery" type="number">
+                <input required class="form-control" id="sciolze_vinery" [(ngModel)]="wine.sciolze_vinery" name="sciolze_vinery"
+                    type="number">
             </div>
-            <div class="form-group col-4">
-                <label for="menu_name">Nome menu</label>
-                <input class="form-control" id="menu_name" [(ngModel)]="wine.menu_name" name="menu_name">
-            </div>
+
         </div>
         <div class="mt-3">
             <button type="submit" class="btn btn-primary" (click)="submit()">Submit</button>
+            <span *ngIf="error" class="error-message"> {{error}}</span>
         </div>
     </form>
 </div>
