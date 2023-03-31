@@ -1,4 +1,4 @@
 @echo off
 
-start "Terminal 1" cmd /k "cd core && npm install && node .\index.js"
-start "Terminal 2" cmd /k "npm start"
+start "backend" cmd /k "git pull && npm install && cd core && node .\index.js"
+start "frontend" cmd /k "git pull && npm install && npm start"
