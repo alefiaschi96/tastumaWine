@@ -2,16 +2,16 @@
     <form>
         <div class="row">
             <div class="form-group col">
-                <label for="denomination">Nome Vino</label>
-                <input class="form-control" id="denomination" [(ngModel)]="wine.denomination" name="denomination">
+                <label for="wine_name">Nome Vino</label>
+                <input class="form-control" id="wine_name" [(ngModel)]="wine.wine_name" name="wine_name">
             </div>
             <div class="form-group col">
                 <label for="price">Prezzo</label>
-                <input class="form-control" id="price" [(ngModel)]="wine.price" name="price">
+                <input class="form-control" id="price" [(ngModel)]="wine.price" name="price" type="number">
             </div>
             <div class="form-group col">
                 <label for="tastuma_vinery">Quantità</label>
-                <input class="form-control" id="tastuma_vinery" [(ngModel)]="wine.tastuma_vinery" name="tastuma_vinery">
+                <input class="form-control" id="tastuma_vinery" [(ngModel)]="wine.tastuma_vinery" name="tastuma_vinery" type="number">
             </div>
         </div>
 
@@ -57,6 +57,21 @@
             <div class="form-group col-4">
                 <label for="fridge_type">Tipo frigo</label>
                 <input class="form-control" id="fridge_type" [(ngModel)]="wine.fridge_type" name="fridge_type">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-4">
+                <label for="denomination">Denominazione</label>
+                <input class="form-control" id="denomination" [(ngModel)]="wine.denomination" name="denomination">
+            </div>
+            <div class="form-group col-4">
+                <label for="sciolze_vinery">Quantità Sciolze</label>
+                <input class="form-control" id="sciolze_vinery" [(ngModel)]="wine.sciolze_vinery" name="sciolze_vinery" type="number">
+            </div>
+            <div class="form-group col-4">
+                <label for="menu_name">Nome menu</label>
+                <input class="form-control" id="menu_name" [(ngModel)]="wine.menu_name" name="menu_name">
             </div>
         </div>
         <div class="mt-3">

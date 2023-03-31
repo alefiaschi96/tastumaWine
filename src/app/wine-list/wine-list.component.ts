@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Wine } from '../models/wine';
 import { ServiceService } from '../service.service';
 
 @Component({
@@ -9,13 +11,17 @@ import { ServiceService } from '../service.service';
 })
 export class WineListComponent {
 
-  wines = [];
+  wines: any[] = [];
+  types: any[] = [];
+  selectedType: string = "";
+  wineName: string = "";
   selectedWine: any;
 
-  constructor(private service: ServiceService, private router: Router) { }
+  constructor(private service: ServiceService, private router: Router, private http: HttpClient) { }
 
   ngOnInit() {
     this.getData();
+    this.getWineTypes();
   }
 
   getData() {
@@ -25,7 +31,6 @@ export class WineListComponent {
   }
 
   openDetail(wine: any) {
-    console.log(wine)
     if (this.selectedWine == wine)
       this.selectedWine = null
     else
@@ -36,4 +41,36 @@ export class WineListComponent {
     this.router.navigate(['/wine'], { state: { wine } });
   }
 
+  getWineTypes() {
+    this.service.getWinesTypes().subscribe(data => {
+      this.types = data
+    })
+  }
+
+  getWineFromType(type: string) {
+    this.selectedType = type;
+    this.service.getWineFromType(type).subscribe(data => {
+      this.wines = data;
+    })
+  }
+
+  removeTypeFilter() {
+    this.selectedType = "";
+    this.getData();
+  }
+
+  getWineFromName(data: any) {
+    if (this.wineName) {
+      this.service.getWineFromName(this.wineName).subscribe(data => {
+        this.wines = data;
+      })
+    } else {
+      if (this.selectedType) {
+        this.getWineFromType(this.selectedType);
+      } else {
+        this.getData();
+      }
+    }
+  }
+  
 }

@@ -8,6 +8,7 @@ import { WineListComponent } from './wine-list/wine-list.component';
 import { WineNewComponent } from './wine-new/wine-new.component';
 import { HeadbarComponent } from './headbar/headbar.component';
 import { FormsModule } from '@angular/forms';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -21,9 +22,10 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     BrowserModule ,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
