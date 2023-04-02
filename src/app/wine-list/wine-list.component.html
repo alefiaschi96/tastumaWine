@@ -1,8 +1,10 @@
 <div class="container">
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Nome" aria-label="Nome" aria-describedby="Nome" (input)="getWineFromName($event)" [(ngModel)]="wineName">
-
-      </div>
+    <div class="row">
+        <div class="input-group mb-3 col-8">
+            <input type="text" class="form-control" placeholder="Nome" aria-label="Nome" aria-describedby="Nome"
+                (input)="getWineFromName($event)" [(ngModel)]="wineName">
+        </div>
+    </div>
     <div class="row">
         <div class="col-3 wine-row-first" *ngFor="let type of types">
             <button class="btn btn-secondary btn-block wine-row-button"
@@ -10,21 +12,22 @@
         </div>
     </div>
 
-    <div class="row wine-row-first wine-type-row" *ngIf="selectedType!=''">{{selectedType}} <button class="btn type-cancel-button wine-row-first" (click)="removeTypeFilter()">X</button></div>
+    <div class="row wine-row-first wine-type-row" *ngIf="selectedType!=''">{{selectedType}} <button
+            class="btn type-cancel-button wine-row-first" (click)="removeTypeFilter()">X</button></div>
     <div class="row">
-        <div class="col-3 wine-row-first"><span>Nome</span></div>
-        <div class="col-3 wine-row-first"><span>Prezzo</span></div>
-        <div class="col-3 wine-row-first"><span>Quantità (T/S)</span></div>
-        <div class="col-3 wine-row-first"><span>Dettagli</span></div>
+        <div class="col-4 wine-row-first"><span>Nome</span></div>
+        <div class="col-4 wine-row-first"><span>Prezzo</span></div>
+        <div class="col-4 wine-row-first"><span>Quantità (T/S)</span></div>
+        <!-- <div class="col-3 wine-row-first"><span>Dettagli</span></div> -->
     </div>
     <div *ngFor="let wine of wines; let i = index">
         <div class="row wine_row" [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}"
             (click)="openDetail(wine)">
-            <div class="col-3 wine-row-first"><span>{{wine['wine_name']}}</span></div>
-            <div class="col-3 wine-row-first"><span>{{wine['price']}} €</span></div>
-            <div class="col-3 wine-row-first"><span>{{wine['tastuma_vinery']}} / {{wine['sciolze_vinery']}}</span></div>
-            <div class="col-3 wine-row-first"><button class="btn btn-secondary" (click)="goToDetail(wine)">🛈</button>
-            </div>
+            <div class="col-4 wine-row-first"><span>{{wine['wine_name']}}</span></div>
+            <div class="col-4 wine-row-first"><span>{{wine['price']}} €</span></div>
+            <div class="col-4 wine-row-first"><span>{{wine['tastuma_vinery']}} / {{wine['sciolze_vinery']}}</span></div>
+            <!-- <div class="col-3 wine-row-first"><button class="btn btn-secondary" (click)="goToDetail(wine)">🛈</button> -->
+            <!-- </div> -->
         </div>
         <div class="row detail-section" *ngIf="selectedWine == wine">
             <!-- <div class="row detail-title">

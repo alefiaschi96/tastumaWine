@@ -9,7 +9,7 @@ import { Wine } from './models/wine';
 export class ServiceService {
 
   
-  private apiUrl = 'http://192.168.1.20:3000/api';
+  private apiUrl = 'http://192.168.0.112:3000/api';
 
   constructor(private http: HttpClient) { }
 
@@ -37,4 +37,10 @@ export class ServiceService {
     return this.http.put<any>(`${this.apiUrl}/wine`, wine );
   }
   
+  uploadCsv(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+
+    return this.http.post<any>(`${this.apiUrl}/upload`, formData);
+  }
 }

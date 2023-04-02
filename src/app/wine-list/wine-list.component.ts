@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Wine } from '../models/wine';
-import { ServiceService } from '../service.service';
+import { ServiceService } from '../service.service'; 
 
 @Component({
   selector: 'app-wine-list',
@@ -36,6 +35,7 @@ export class WineListComponent {
     else
       this.selectedWine = wine;
   }
+
 
   goToDetail(wine: any) {
     this.router.navigate(['/wine'], { state: { wine } });
@@ -72,5 +72,5 @@ export class WineListComponent {
       }
     }
   }
-  
+
 }
