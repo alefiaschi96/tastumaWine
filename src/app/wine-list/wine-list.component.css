@@ -53,3 +53,23 @@
     height: 10vh;
     width: auto;
 }
+
+.wine-row-button{
+    width: 25vw;
+}
+
+.wine-type-row{
+    font-weight: 700;
+}
+
+.type-cancel-button{
+    width: 3vh;
+}
+
+@media (max-width:481px){
+    .wine-row-button{
+        min-height: 10vh;
+        width: 25vw;
+        font-size: 1.8vh;
+    }
+}
