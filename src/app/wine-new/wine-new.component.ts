@@ -77,9 +77,36 @@ export class WineNewComponent {
       const wsname: string = wb.SheetNames[0];
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
 
-      let data: any[] = XLSX.utils.sheet_to_json(ws, { defval: '' });
+      // Ottieni i dati grezzi dal foglio Excel
+      let rawData: any[] = XLSX.utils.sheet_to_json(ws, { defval: '' });
 
-      data = this.replaceApostrophes(data);
+      // Mappa i campi del CSV ai nomi delle colonne del database
+      let mappedData = rawData.map(row => {
+        // Salta righe vuote
+        if (!row['Tipologia'] && !row['Nome Vino']) return null;
+
+        // Mappa i campi dal CSV ai nomi delle colonne del database
+        return {
+          wine_name: row['Nome Vino'] || '',
+          type: row['Tipologia'] || '',
+          region: row['Regione'] || '',
+          denomination: row['Denominazione'] || '',
+          menu_name: row['Nome per Carta'] || '',
+          company: row['Azienda'] || '',
+          vine: row['Vitigno'] || '',
+          year: row['Anno'] || '',
+          reseller: row['Acquistato da '] || '',
+          price: row['Prezzo bottiglia'] ? parseFloat(row['Prezzo bottiglia'].toString().replace('€', '').trim()) : '',
+          sciolze_vinery: row['Cantina Sciolze'] || '0',
+          tastuma_vinery: row['Cantina Tastuma'] || '0',
+          service_temp: row['Temperatura di servizio'] || '',
+          fridge_temp: row['Temperatura frigo'] || '',
+          fridge_type: row['Tipo Frigo'] || ''
+        };
+      }).filter(item => item !== null);
+
+      // Sostituisci gli apostrofi per evitare problemi SQL
+      let data = this.replaceApostrophes(mappedData);
 
       this.service.uploadCsv(data).subscribe({
         next: (res) => console.log('✅ Upload completato', res),
