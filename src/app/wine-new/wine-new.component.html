@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row mb-3 mt-3 mx-auto text-center">
 
-        <div class="col-12"><span>Importa da Excel: </span><input type="file" (change)="onFileSelected($event)"></div>
+        <div class="col-12"><span>Importa da Excel: </span><input type="file" accept=".xls,.xlsx,.csv" (change)="onFileSelected($event)"></div>
         <div class="mt-3">
             <span class="error-message"> {{error}}</span>
         </div>

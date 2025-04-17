@@ -61,60 +61,85 @@ export class WineNewComponent {
     const file: File = event.target.files[0];
     const reader: FileReader = new FileReader();
 
+    // Determina se il file è un Excel binario (.xls, .xlsx) o un CSV
+    const isExcel = /\.(xlsx|xls)$/i.test(file.name);
+
     reader.onload = (e: any) => {
-      const arrayBuffer = e.target.result;
-      const bytes = new Uint8Array(arrayBuffer);
+      try {
+        let wb: XLSX.WorkBook;
 
-      const detectedEncoding = Encoding.detect(bytes) || 'UTF8'; // fallback
+        if (isExcel) {
+          // Per i file Excel, usa direttamente l'ArrayBuffer
+          const arrayBuffer = e.target.result;
+          wb = XLSX.read(arrayBuffer, { type: 'array' });
+        } else {
+          // Per i file CSV, usa il rilevamento dell'encoding
+          const arrayBuffer = e.target.result;
+          const bytes = new Uint8Array(arrayBuffer);
+          const detectedEncoding = Encoding.detect(bytes) || 'UTF8';
 
-      const text = Encoding.convert(bytes, {
-        from: detectedEncoding as Encoding.Encoding, // forza cast
-        to: 'UNICODE',
-        type: 'string',
-      });
+          const text = Encoding.convert(bytes, {
+            from: detectedEncoding as Encoding.Encoding,
+            to: 'UNICODE',
+            type: 'string',
+          });
 
-      const wb: XLSX.WorkBook = XLSX.read(text, { type: 'string' });
-      const wsname: string = wb.SheetNames[0];
-      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+          wb = XLSX.read(text, { type: 'string' });
+        }
 
-      // Ottieni i dati grezzi dal foglio Excel
-      let rawData: any[] = XLSX.utils.sheet_to_json(ws, { defval: '' });
+        const wsname: string = wb.SheetNames[0];
+        const ws: XLSX.WorkSheet = wb.Sheets[wsname];
 
-      // Mappa i campi del CSV ai nomi delle colonne del database
-      let mappedData = rawData.map(row => {
-        // Salta righe vuote
-        if (!row['Tipologia'] && !row['Nome Vino']) return null;
+        // Ottieni i dati grezzi dal foglio Excel
+        let rawData: any[] = XLSX.utils.sheet_to_json(ws, { defval: '' });
 
-        // Mappa i campi dal CSV ai nomi delle colonne del database
-        return {
-          wine_name: row['Nome Vino'] || '',
-          type: row['Tipologia'] || '',
-          region: row['Regione'] || '',
-          denomination: row['Denominazione'] || '',
-          menu_name: row['Nome per Carta'] || '',
-          company: row['Azienda'] || '',
-          vine: row['Vitigno'] || '',
-          year: row['Anno'] || '',
-          reseller: row['Acquistato da '] || '',
-          price: row['Prezzo bottiglia'] ? parseFloat(row['Prezzo bottiglia'].toString().replace('€', '').trim()) : '',
-          sciolze_vinery: row['Cantina Sciolze'] || '0',
-          tastuma_vinery: row['Cantina Tastuma'] || '0',
-          service_temp: row['Temperatura di servizio'] || '',
-          fridge_temp: row['Temperatura frigo'] || '',
-          fridge_type: row['Tipo Frigo'] || ''
-        };
-      }).filter(item => item !== null);
+        // Mappa i campi del CSV ai nomi delle colonne del database
+        let mappedData = rawData.map(row => {
+          // Salta righe vuote
+          if (!row['Tipologia'] && !row['Nome Vino']) return null;
 
-      // Sostituisci gli apostrofi per evitare problemi SQL
-      let data = this.replaceApostrophes(mappedData);
+          // Mappa i campi dal CSV ai nomi delle colonne del database
+          return {
+            wine_name: row['Nome Vino'] || '',
+            type: row['Tipologia'] || '',
+            region: row['Regione'] || '',
+            denomination: row['Denominazione'] || '',
+            menu_name: row['Nome per Carta'] || '',
+            company: row['Azienda'] || '',
+            vine: row['Vitigno'] || '',
+            year: row['Anno'] || '',
+            reseller: row['Acquistato da '] || '',
+            price: row['Prezzo bottiglia'] ? parseFloat(row['Prezzo bottiglia'].toString().replace('€', '').trim()) : '',
+            sciolze_vinery: row['Cantina Sciolze'] || '0',
+            tastuma_vinery: row['Cantina Tastuma'] || '0',
+            service_temp: row['Temperatura di servizio'] || '',
+            fridge_temp: row['Temperatura frigo'] || '',
+            fridge_type: row['Tipo Frigo'] || ''
+          };
+        }).filter(item => item !== null);
 
-      this.service.uploadCsv(data).subscribe({
-        next: (res) => console.log('✅ Upload completato', res),
-        error: (err) => {
-          console.error('❌ Errore upload', err);
-          this.error = "Errore durante l'upload";
-        },
-      });
+        // Sostituisci gli apostrofi per evitare problemi SQL
+        let data = this.replaceApostrophes(mappedData);
+
+        this.service.uploadCsv(data).subscribe({
+          next: (res) => {
+            console.log('✅ Upload completato', res);
+            this.error = '';
+          },
+          error: (err) => {
+            console.error('❌ Errore upload', err);
+            this.error = "Errore durante l'upload";
+          },
+        });
+      } catch (error: unknown) {
+        console.error('❌ Errore nella lettura del file:', error);
+        // Gestisci error come unknown e verifica se è un'istanza di Error
+        if (error instanceof Error) {
+          this.error = `Errore nella lettura del file: ${error.message}`;
+        } else {
+          this.error = 'Errore nella lettura del file: Formato non supportato';
+        }
+      }
     };
 
     reader.readAsArrayBuffer(file); // IMPORTANTE: leggere come array buffer
