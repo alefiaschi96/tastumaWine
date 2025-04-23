@@ -56,10 +56,14 @@ export class WineListComponent {
   }
 
   getWineFromType(type: string) {
-    this.selectedType = type;
-    this.service.getWineFromType(type).subscribe((data) => {
-      this.wines = data;
-    });
+    if (type == this.selectedType) {
+      this.removeTypeFilter();
+    } else {
+      this.selectedType = type;
+      this.service.getWineFromType(type).subscribe((data) => {
+        this.wines = data;
+      });
+    }
   }
 
   removeTypeFilter() {
@@ -68,7 +72,7 @@ export class WineListComponent {
   }
 
   getWineFromName(data: any) {
-    if (this.wineName) {
+    if (this.wineName && this.wineName.length > 3) {
       this.service.getWineFromName(this.wineName).subscribe((data) => {
         this.wines = data;
       });

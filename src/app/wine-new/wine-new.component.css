@@ -1,3 +1,167 @@
-.error-message{
-    color: red
+/* Variabili di colore - coordinate con il resto dell'app */
+:root {
+  --primary-color: #8e2de2;
+  --secondary-color: #4a00e0;
+  --light-color: #f8f9fa;
+  --dark-color: #343a40;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+
+/* Card principale */
+.import-card {
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.card-header {
+  padding: 25px 30px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.card-header p {
+  margin-top: 10px;
+  margin-bottom: 0;
+  opacity: 0.8;
+}
+
+.card-body {
+  padding: 30px;
+}
+
+/* Area di upload file */
+.file-upload-container {
+  width: 100%;
+}
+
+.file-upload-area {
+  height: 400px;
+  border: 2px dashed #ced4da;
+  border-radius: var(--border-radius);
+  padding: 0;
+  text-align: center;
+  transition: var(--transition);
+  background-color: #f8f9fa;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.file-upload-area:hover {
+  border-color: var(--primary-color);
+  background-color: #f0f0f0;
+}
+
+.file-upload-area.drag-over {
+  border-color: var(--primary-color);
+  background-color: rgba(142, 45, 226, 0.05);
+  transform: scale(1.02);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.upload-icon {
+  font-size: 48px;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.upload-text {
+  font-size: 18px;
+  color: #6c757d;
+  margin-bottom: 15px;
+}
+
+/* Stile per il pulsante di selezione file */
+.upload-button {
+  display: inline-block;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  color: white;
+  border-radius: 30px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-bottom: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.upload-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Stile per il contenitore del pulsante di selezione */
+.select-file-container {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: var(--transition);
+}
+
+.select-file-text {
+  color: #6c757d;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.file-input {
+  display: none;
+}
+
+.file-types {
+  font-size: 14px;
+  color: #6c757d;
+  margin-bottom: 0;
+}
+
+/* Messaggi di errore */
+.error-container {
+  margin-top: 20px;
+}
+
+.error-message {
+  background-color: #fff5f5;
+  color: #e53e3e;
+  padding: 12px 15px;
+  border-radius: var(--border-radius);
+  border-left: 4px solid #e53e3e;
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card-header {
+    padding: 20px;
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .file-upload-area {
+    padding: 30px 15px;
+  }
+
+  .upload-icon {
+    font-size: 36px;
+  }
+
+  .upload-text {
+    font-size: 16px;
+  }
 }

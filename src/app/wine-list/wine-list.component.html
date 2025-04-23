@@ -1,113 +1,123 @@
-<div class="container">
-    <div class="row">
-        <div class="input-group mb-3 col-8">
-            <input type="text" class="form-control" placeholder="Nome" aria-label="Nome" aria-describedby="Nome"
-                (input)="getWineFromName($event)" [(ngModel)]="wineName">
-        </div>
+<div class="container mt-4">
+  <!-- Barra di ricerca migliorata -->
+  <div class="row mb-4">
+    <div class="col-md-8 mx-auto">
+      <div class="search-container">
+        <i class="fa fa-search search-icon"></i>
+        <input
+          type="text"
+          class="form-control search-input"
+          placeholder="Cerca vino..."
+          (input)="getWineFromName($event)"
+          [(ngModel)]="wineName"
+        />
+      </div>
     </div>
-    <div class="row">
-        <div class="col-3 wine-row-first" *ngFor="let type of types">
-            <button class="btn btn-secondary btn-block wine-row-button"
-                (click)="getWineFromType(type.type)">{{type.type}}</button>
-        </div>
-    </div>
+  </div>
 
-    <div class="row wine-row-first wine-type-row" *ngIf="selectedType!=''">{{selectedType}} <button
-            class="btn type-cancel-button wine-row-first" (click)="removeTypeFilter()">X</button></div>
-    <div class="row">
-        <div class="col-4 wine-row-first"><span>Nome</span></div>
-        <div class="col-4 wine-row-first"><span>Prezzo</span></div>
-        <div class="col-4 wine-row-first"><span>Quantità (T/S)</span></div>
-        <!-- <div class="col-3 wine-row-first"><span>Dettagli</span></div> -->
-    </div>
-    <div *ngFor="let wine of wines; let i = index">
-        <div class="row wine_row" [ngClass]="{'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0}"
-            (click)="openDetail(wine)">
-            <div class="col-4 wine-row-first"><span>{{wine['wine_name']}}</span></div>
-            <div class="col-4 wine-row-first"><span>{{wine['price']}} €</span></div>
-            <div class="col-4 wine-row-first"><span>{{wine['tastuma_vinery']}} / {{wine['sciolze_vinery']}}</span></div>
-            <!-- <div class="col-3 wine-row-first"><button class="btn btn-secondary" (click)="goToDetail(wine)">🛈</button> -->
-            <!-- </div> -->
+  <!-- Filtri per tipo di vino -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="wine-filters">
+        <div class="wine-filter-item" *ngFor="let type of types">
+          <button
+            class="btn wine-type-btn"
+            [ngClass]="{ active: selectedType === type.type }"
+            (click)="getWineFromType(type.type)"
+          >
+            {{ type.type }}
+          </button>
         </div>
-        <div class="row detail-section" *ngIf="selectedWine == wine">
-            <!-- <div class="row detail-title">
-                <img class="wine-image" src="../../assets/images/wine_images/barolo.png">
-            </div> -->
-            <div class="row wine-row-details wine-row-first">
-                <div *ngIf="selectedWine == wine" class="col-4">
-                    <div class="col-12 detail-subtitle">
-                        <span>TIPO</span>
-                    </div>
-                    <div class="col-12">
-                        <span>{{selectedWine['type']}}</span>
-                    </div>
-                </div>
-                <div *ngIf="selectedWine == wine" class="col-4">
-                    <div class="col-12 detail-subtitle">
-                        <span>ANNO</span>
-                    </div>
-                    <div class="col-12">
-                        <span>{{selectedWine['year']}}</span>
-                    </div>
-                </div>
-                <div *ngIf="selectedWine == wine" class="col-4">
-                    <div class="col-12 detail-subtitle">
-                        <span>REGIONE</span>
-                    </div>
-                    <div class="col-12">
-                        <span>{{selectedWine['region']}}</span>
-                    </div>
-                </div>
-                <div *ngIf="selectedWine == wine" class="col-4">
-                    <div class="col-12 detail-subtitle">
-                        <span>DENOMIN.</span>
-                    </div>
-                    <div class="col-12">
-                        <span>{{selectedWine['denomination']}}</span>
-                    </div>
-                </div>
-                <div *ngIf="selectedWine == wine" class="col-4">
+      </div>
+    </div>
+  </div>
 
-                    <div class="col-12 detail-subtitle">
-                        <span>AZIENDA</span>
-                    </div>
-                    <div class="col-12">
-                        <span>{{selectedWine['company']}}</span>
-                    </div>
-                </div>
-                <div *ngIf="selectedWine == wine" class="col-4">
-                    <div class="col-12 detail-subtitle">
-                        <span>VITIGNO</span>
-                    </div>
-                    <div class="col-12">
-                        <span>{{selectedWine['vine']}}</span>
-                    </div>
-                </div>
-                <div *ngIf="selectedWine == wine" class="col-4">
-                    <div class="col-12 detail-subtitle">
-                        <span>ACQUISTATO DA</span>
-                    </div>
-                    <div class="col-12">
-                        <span>{{selectedWine['reseller']}}</span>
-                    </div>
-                </div>
-                <div *ngIf="selectedWine == wine" class="col-4">
-                    <div class="col-12 detail-subtitle">
-                        <span>TEMPERATURA DI SERVIZIO</span>
-                    </div>
-                    <div class="col-12">
-                        <span>{{selectedWine['service_temp']}}</span>
-                    </div>
-                </div>
-                <div *ngIf="selectedWine == wine" class="col-4">
-                    <div class="col-12 detail-subtitle">
-                        <span>TEMPERATURA FRIGO</span>
-                    </div>
-                    <div class="col-12">
-                        <span>{{selectedWine['fridge_temp']}}</span>
-                    </div>
-                </div>
+  <!-- Intestazione tabella -->
+  <div class="row table-header">
+    <div class="col-4"><span>Nome</span></div>
+    <div class="col-4"><span>Prezzo</span></div>
+    <div class="col-4"><span>Quantità (T/S)</span></div>
+  </div>
+
+  <!-- Lista vini -->
+  <div class="wine-list">
+    <div *ngFor="let wine of wines; let i = index" class="wine-item-container">
+      <div
+        class="wine-item"
+        [ngClass]="{ 'even-row': i % 2 === 0, 'odd-row': i % 2 !== 0 }"
+        (click)="openDetail(wine)"
+      >
+        <div class="col-4 wine-name">{{ wine["wine_name"] }}</div>
+        <div class="col-4 wine-price">{{ wine["price"] }} €</div>
+        <div class="col-4 wine-quantity">
+          {{ wine["tastuma_vinery"] }} / {{ wine["sciolze_vinery"] }}
+        </div>
+      </div>
+
+      <!-- Sezione dettagli -->
+      <div class="wine-details" *ngIf="selectedWine == wine">
+        <div class="row wine-details-content">
+          <!-- Prima riga di dettagli -->
+          <div class="col-md-4 detail-item">
+            <div class="detail-card">
+              <div class="detail-label">Tipo</div>
+              <div class="detail-value">{{ selectedWine["type"] }}</div>
             </div>
+          </div>
+          <div class="col-md-4 detail-item">
+            <div class="detail-card">
+              <div class="detail-label">Anno</div>
+              <div class="detail-value">{{ selectedWine["year"] }}</div>
+            </div>
+          </div>
+          <div class="col-md-4 detail-item">
+            <div class="detail-card">
+              <div class="detail-label">Regione</div>
+              <div class="detail-value">{{ selectedWine["region"] }}</div>
+            </div>
+          </div>
+
+          <!-- Seconda riga di dettagli -->
+          <div class="col-md-4 detail-item">
+            <div class="detail-card">
+              <div class="detail-label">Denominazione</div>
+              <div class="detail-value">{{ selectedWine["denomination"] }}</div>
+            </div>
+          </div>
+          <div class="col-md-4 detail-item">
+            <div class="detail-card">
+              <div class="detail-label">Azienda</div>
+              <div class="detail-value">{{ selectedWine["company"] }}</div>
+            </div>
+          </div>
+          <div class="col-md-4 detail-item">
+            <div class="detail-card">
+              <div class="detail-label">Vitigno</div>
+              <div class="detail-value">{{ selectedWine["vine"] }}</div>
+            </div>
+          </div>
+
+          <!-- Terza riga di dettagli -->
+          <div class="col-md-4 detail-item">
+            <div class="detail-card">
+              <div class="detail-label">Acquistato da</div>
+              <div class="detail-value">{{ selectedWine["reseller"] }}</div>
+            </div>
+          </div>
+          <div class="col-md-4 detail-item">
+            <div class="detail-card">
+              <div class="detail-label">Temperatura di servizio</div>
+              <div class="detail-value">{{ selectedWine["service_temp"] }}</div>
+            </div>
+          </div>
+          <div class="col-md-4 detail-item">
+            <div class="detail-card">
+              <div class="detail-label">Temperatura frigo</div>
+              <div class="detail-value">{{ selectedWine["fridge_temp"] }}</div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

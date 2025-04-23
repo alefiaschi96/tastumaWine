@@ -4,5 +4,9 @@
 export const environment = {
   production: false,
   supabaseUrl: 'https://rtvqyarximgfkzpomljk.supabase.co',
-  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ0dnF5YXJ4aW1nZmt6cG9tbGprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ4OTM1NzMsImV4cCI6MjA2MDQ2OTU3M30.4xHRQsnCCUUwYbQrMxFDdYeweSXR_X_PnF_02uNqkZI'
+  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ0dnF5YXJ4aW1nZmt6cG9tbGprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ4OTM1NzMsImV4cCI6MjA2MDQ2OTU3M30.4xHRQsnCCUUwYbQrMxFDdYeweSXR_X_PnF_02uNqkZI',
+  permissions: {
+    "alessandro.fiaschi96@gmail.com": "admin",
+    "massimo.dutto@tracenet.it": "admin"
+  }
 };

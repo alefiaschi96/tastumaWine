@@ -9,13 +9,17 @@ import { WineNewComponent } from './wine-new/wine-new.component';
 import { HeadbarComponent } from './headbar/headbar.component';
 import { FormsModule } from '@angular/forms';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WineListComponent,
     WineNewComponent,
-    HeadbarComponent
+    HeadbarComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
